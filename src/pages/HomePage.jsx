@@ -11,6 +11,18 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
+function LetterSplit({ text, className }) {
+  return (
+    <span className={className} aria-label={text}>
+      {text.split("").map((char, i) => (
+        <span className="letter-ct" key={i} aria-hidden="true">
+          <span>{char === " " ? "\u00A0" : char}</span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function useHomeMotion() {
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -20,19 +32,23 @@ function useHomeMotion() {
 
     const media = gsap.matchMedia();
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".home-hero__title",
-        { y: 24, autoAlpha: 0 },
-        {
-          y: 0,
-          autoAlpha: 1,
-          duration: 1.05,
-          ease: "power3.out",
-        },
-      );
+      const letters = gsap.utils.toArray(".home-hero__title .letter-ct span");
+      if (letters.length) {
+        gsap.fromTo(
+          letters,
+          { y: "5.21rem", autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 1.5,
+            ease: "cubic-bezier(0, 0, 0.08, 0.97)",
+            stagger: 0.05,
+          },
+        );
+      }
 
       gsap.fromTo(
-        [".hero-stage__backdrop", ".hero-stage__portrait", ".hero-stage__detail"],
+        [".hero-stage__foliage", ".hero-stage__portrait"],
         { y: 36, autoAlpha: 0 },
         {
           y: 0,
@@ -60,38 +76,65 @@ function useHomeMotion() {
       }
 
       gsap.utils.toArray("[data-reveal]").forEach((element) => {
-        gsap.fromTo(
-          element,
-          { y: 44, autoAlpha: 0 },
-          {
-            y: 0,
-            autoAlpha: 1,
-            duration: 0.95,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: element,
-              start: "top 85%",
-              once: true,
-            },
+        const dir = element.dataset.reveal || "up";
+        const from = { autoAlpha: 0 };
+        if (dir === "left") {
+          from.x = "-5.21rem";
+        } else if (dir === "right") {
+          from.x = "5.21rem";
+        } else {
+          from.y = 44;
+        }
+
+        gsap.fromTo(element, from, {
+          x: 0,
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.95,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: element,
+            start: "top 85%",
+            once: true,
           },
-        );
+        });
       });
 
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: ".home-hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: 1.1,
-        },
-      })
-        .to(".hero-stage__portrait", { y: "15vh", scale: 1.18, ease: "none" }, 0)
-        .to(".hero-stage__backdrop", { y: "12vh", scale: 1.08, ease: "none" }, 0)
-        .to(".hero-stage__detail", { y: "20vh", scale: 1.1, ease: "none" }, 0)
-        .to(".hero-stage__halo--left", { x: "-10vw", y: "18vh", rotate: -8, ease: "none" }, 0)
-        .to(".hero-stage__halo--right", { x: "10vw", y: "22vh", rotate: 12, ease: "none" }, 0);
-
       media.add("(min-width: 960px)", () => {
+        const heroLetters = gsap.utils.toArray(".home-hero__title .letter-ct span");
+        if (heroLetters.length) {
+          gsap.fromTo(
+            heroLetters,
+            {
+              rotationY: 70,
+              transformOrigin: "left center",
+              z: 32,
+              x: 80,
+            },
+            {
+              rotationY: 0.01,
+              z: 0,
+              x: 0,
+              duration: 1.5,
+              ease: "cubic-bezier(0, 0, 0.08, 0.97)",
+              stagger: 0.05,
+            },
+          );
+        }
+
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: ".home-hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.1,
+          },
+        })
+          .to(".hero-stage__portrait", { y: "15vh", scale: 1.2, ease: "none" }, 0)
+          .to(".hero-stage__foliage--left", { y: "13vh", scale: 1.1, ease: "none" }, 0)
+          .to(".hero-stage__foliage--right", { y: "16vh", scale: 1.1, ease: "none" }, 0)
+          .to(".hero-stage__bg", { y: "30vh", ease: "none" }, 0);
+
         gsap.timeline({
           scrollTrigger: {
             trigger: ".precision__track",
@@ -102,71 +145,174 @@ function useHomeMotion() {
         })
           .fromTo(
             ".precision__image--reveal",
-            {
-              clipPath: "inset(100% 0 0 0 round 2rem)",
-              scale: 1.16,
-            },
-            {
-              clipPath: "inset(0% 0 0 0 round 2rem)",
-              scale: 1,
-              ease: "none",
-            },
+            { clipPath: "inset(100% 0 0 0 round 2rem)", scale: 1.5 },
+            { clipPath: "inset(0% 0 0 0 round 2rem)", scale: 1, ease: "none" },
             0,
           )
           .to(
             ".precision__image--base",
-            {
-              clipPath: "inset(0 0 100% 0 round 2rem)",
-              scale: 1.12,
-              ease: "none",
-            },
+            { clipPath: "inset(0 0 100% 0 round 2rem)", scale: 1.5, ease: "none" },
             0,
           );
 
-        gsap.timeline({
+        const galleryLetters = gsap.utils.toArray(".worlds__overlay-text .letter-ct span");
+        const worldsTl = gsap.timeline({
           scrollTrigger: {
             trigger: ".worlds__track",
             start: "top top",
             end: "bottom bottom",
-            scrub: 1.05,
+            scrub: 1.2,
           },
-        })
-          .to(".worlds__collage", { scale: 2.8, ease: "none" }, 0)
-          .to(".worlds__tile--one", { xPercent: -26, yPercent: -20, ease: "none" }, 0)
-          .to(".worlds__tile--two", { xPercent: 24, yPercent: -24, ease: "none" }, 0)
-          .to(".worlds__tile--three", { yPercent: -30, scale: 1.08, ease: "none" }, 0)
-          .to(".worlds__tile--four", { xPercent: -28, yPercent: 26, ease: "none" }, 0)
-          .to(".worlds__tile--five", { xPercent: 26, yPercent: 28, ease: "none" }, 0)
-          .to(".worlds__veil", { opacity: 0.6, ease: "none" }, 0)
-          .fromTo(".worlds__headline", { autoAlpha: 0, y: 48 }, { autoAlpha: 1, y: 0, ease: "none" }, 0.18);
+        });
 
-        gsap.to(".voices__orb", {
-          rotate: 360,
+        worldsTl
+          .to(".worlds__tile--one", { autoAlpha: 0, xPercent: -27, yPercent: -27, ease: "none" }, 0)
+          .to(".worlds__tile--two", { autoAlpha: 0, xPercent: 27, yPercent: -27, ease: "none" }, 0)
+          .to(".worlds__tile--four", { autoAlpha: 0, xPercent: -27, yPercent: 27, ease: "none" }, 0)
+          .to(".worlds__tile--five", { autoAlpha: 0, xPercent: 27, yPercent: 27, ease: "none" }, 0)
+          .to(".worlds__tile--three", { yPercent: 8, scale: 3.35, ease: "none" }, 0)
+          .to(".worlds__veil", { opacity: 0.72, ease: "none" }, 0);
+
+        if (galleryLetters.length) {
+          galleryLetters.forEach((letter, i) => {
+            worldsTl.fromTo(
+              letter,
+              { rotationY: 90, autoAlpha: 0, x: 80 },
+              { rotationY: 0, autoAlpha: 1, x: 0, ease: "none", duration: 0.12 },
+              0.35 + i * 0.02,
+            );
+          });
+        }
+
+        worldsTl.fromTo(
+          ".worlds__headline",
+          { autoAlpha: 0, y: 32 },
+          { autoAlpha: 1, y: 0, ease: "none" },
+          0.42,
+        );
+
+        gsap.fromTo(
+          ".voices__image--2",
+          { clipPath: "inset(100% 0 0 0 round 2rem)", scale: 1.2 },
+          {
+            clipPath: "inset(0% 0 0 0 round 2rem)",
+            scale: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".voice-card--2",
+              start: "top bottom",
+              end: "50% 50%",
+              scrub: true,
+            },
+          },
+        );
+
+        gsap.fromTo(
+          ".voices__image--3",
+          { clipPath: "inset(100% 0 0 0 round 2rem)", scale: 1.2 },
+          {
+            clipPath: "inset(0% 0 0 0 round 2rem)",
+            scale: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".voice-card--3",
+              start: "top bottom",
+              end: "50% 50%",
+              scrub: true,
+            },
+          },
+        );
+
+        gsap.to(".voices__halfcircle--spin", {
+          rotation: 360,
           ease: "none",
           scrollTrigger: {
-            trigger: ".voices",
+            trigger: ".voices__reviews",
             start: "top top",
             end: "bottom bottom",
             scrub: 1,
           },
         });
+      });
 
-        [2, 3].forEach((index) => {
-          gsap.fromTo(
-            `.voices__image--${index}`,
-            {
-              clipPath: "inset(100% 0 0 0 round 2rem)",
-              scale: 1.14,
+      media.add("(max-width: 959px)", () => {
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: ".home-hero",
+            start: "top top",
+            end: "70% top",
+            scrub: 0.9,
+          },
+        })
+          .to(".hero-stage__portrait", { y: "5vh", scale: 1.05, ease: "none" }, 0)
+          .to(".hero-stage__foliage--left", { x: "-4vw", y: "7vh", scale: 1.03, ease: "none" }, 0)
+          .to(".hero-stage__foliage--right", { x: "4vw", y: "7vh", scale: 1.03, ease: "none" }, 0);
+
+        gsap.fromTo(
+          ".precision__image",
+          { y: 30, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.9,
+            ease: "power3.out",
+            stagger: 0.12,
+            scrollTrigger: {
+              trigger: ".precision__visual",
+              start: "top 82%",
+              once: true,
             },
+          },
+        );
+
+        gsap.fromTo(
+          ".worlds__tile",
+          { y: 26, scale: 0.97, autoAlpha: 0 },
+          {
+            y: 0,
+            scale: 1,
+            autoAlpha: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.08,
+            scrollTrigger: {
+              trigger: ".worlds__collage",
+              start: "top 82%",
+              once: true,
+            },
+          },
+        );
+
+        gsap.fromTo(
+          ".worlds__headline",
+          { y: 26, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.85,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ".worlds__headline",
+              start: "top 84%",
+              once: true,
+            },
+          },
+        );
+
+        gsap.utils.toArray(".voices__image").forEach((image, index) => {
+          gsap.fromTo(
+            image,
+            { y: 24, autoAlpha: 0 },
             {
-              clipPath: "inset(0% 0 0 0 round 2rem)",
-              scale: 1,
-              ease: "none",
+              y: 0,
+              autoAlpha: 1,
+              duration: 0.82,
+              ease: "power3.out",
+              delay: index * 0.06,
               scrollTrigger: {
-                trigger: `.voice--${index}`,
-                start: "top 72%",
-                end: "top 16%",
-                scrub: 1,
+                trigger: image,
+                start: "top 86%",
+                once: true,
               },
             },
           );
@@ -194,44 +340,30 @@ export function HomePage() {
       <section className="home-hero" id="start">
         <div className="site-shell home-hero__frame">
           <div className="hero-stage">
+            <div className="hero-stage__bg" aria-hidden="true" />
+
             <h1 className="home-hero__title">
-              Angel&apos;s Wink
+              <LetterSplit text="ANGEL'S" className="home-hero__title-line" />
+              <LetterSplit text="WINK" className="home-hero__title-line" />
             </h1>
 
             <div className="hero-stage__visuals" aria-hidden="true">
-              <span className="hero-stage__halo hero-stage__halo--left" />
-              <span className="hero-stage__halo hero-stage__halo--right" />
-
-              <figure className="hero-stage__backdrop">
-                <img src={imageLibrary.heroBackdrop.src} alt={imageLibrary.heroBackdrop.alt} />
-              </figure>
+              <div className="hero-stage__foliage hero-stage__foliage--left" />
+              <div className="hero-stage__foliage hero-stage__foliage--right" />
 
               <figure className="hero-stage__portrait">
                 <img src={imageLibrary.heroPortrait.src} alt={imageLibrary.heroPortrait.alt} />
               </figure>
-
-              <figure className="hero-stage__detail">
-                <img src={imageLibrary.heroDetail.src} alt={imageLibrary.heroDetail.alt} />
-              </figure>
             </div>
-          </div>
 
-          <div className="home-hero__copy">
             <p className="home-hero__lead" data-intro>
-              Fine tattoo work in Abuja, with lash appointments, beauty education, and selected online programs
-              by Angel Zino.
+              Private tattoo appointments in Abuja, shaped with a softer hand and a sharper eye.
             </p>
 
-            <div className="home-hero__actions" data-intro>
-              <a className="button" href={contactLinks.booking} target="_blank" rel="noreferrer">
-                Book Appointment
-              </a>
-              <Link className="button button--ghost" to="/about">
-                Meet Angel
-              </Link>
+            <div className="scroll-arrow" aria-hidden="true">
+              <span className="scroll-arrow__line" />
             </div>
           </div>
-
         </div>
       </section>
 
@@ -243,14 +375,14 @@ export function HomePage() {
                 {tattooLane.eyebrow}
               </p>
 
-              <h2 className="section-title section-title--light" id="precision-title" data-reveal>
-                Quiet drama, careful hands, and tattoo work that sets the whole tone.
+              <h2 className="section-title section-title--light precision__heading" id="precision-title">
+                <span data-reveal="right">Private tattoo work</span>
+                <span data-reveal="left">with a softer edge and an exacting finish.</span>
               </h2>
 
               <p className="precision__lead" data-reveal>
-                Angel&apos;s Wink should feel personal before it feels promotional. This opening chapter keeps the
-                tattoo side of the brand in full focus: soft authority, clean detail, and a premium Abuja studio
-                presence.
+                Tattoo artistry leads the house. The first impression should feel calm, precise, and quietly elevated,
+                with the Abuja studio experience setting the tone for everything else that follows.
               </p>
 
               <div className="precision__facts" data-reveal>
@@ -265,6 +397,10 @@ export function HomePage() {
             </div>
 
             <div className="precision__visual" aria-hidden="true">
+              <svg className="precision__circle" viewBox="0 0 1080 1080" fill="none">
+                <circle cx="540" cy="540" r="538" stroke="#606060" strokeWidth="1" />
+              </svg>
+
               <figure className="precision__image precision__image--base">
                 <img src={imageLibrary.precisionStill.src} alt={imageLibrary.precisionStill.alt} />
               </figure>
@@ -297,14 +433,20 @@ export function HomePage() {
                 <img src={imageLibrary.collageFive.src} alt={imageLibrary.collageFive.alt} />
               </figure>
               <div className="worlds__veil" />
+
+              <div className="worlds__overlay-text" aria-hidden="true">
+                <LetterSplit text="Beyond" className="worlds__overlay-line" />
+                <LetterSplit text="the" className="worlds__overlay-line" />
+                <LetterSplit text="chair" className="worlds__overlay-line" />
+              </div>
             </div>
 
             <div className="worlds__headline">
-              <p className="eyebrow eyebrow--soft">The rest of the brand</p>
-              <h2 className="section-title section-title--light">
-                Lashes, education, digital growth, and wellness should arrive like connected worlds, not scattered
-                side hustles.
-              </h2>
+              <p className="eyebrow eyebrow--soft">Further inside</p>
+              <h2 className="section-title section-title--light">Beyond the chair.</h2>
+              <p className="worlds__body">
+                Lashes, education, digital strategy, and wellness sit under the same founder-led standard.
+              </p>
             </div>
           </div>
         </div>
@@ -338,34 +480,46 @@ export function HomePage() {
       <section className="voices" id="voices">
         <div className="site-shell voices__intro" data-reveal>
           <p className="eyebrow">Client voices</p>
-          <h2 className="section-title section-title--light">
-            The page still has to convert. Motion means nothing if trust is missing.
+          <h2 className="section-title section-title--light voices__heading">
+            <span data-reveal="left">Words</span>
+            <span data-reveal="right">from the chair.</span>
           </h2>
         </div>
 
-        <div className="site-shell voices__grid">
-          <div className="voices__visual" aria-hidden="true">
+        <div className="site-shell voices__reviews">
+          <div className="voices__img-col" aria-hidden="true">
             <span className="voices__orb" />
 
-            <figure className="voices__image voices__image--1">
-              <img src={imageLibrary.voiceOne.src} alt={imageLibrary.voiceOne.alt} />
-            </figure>
+            <div className="voices__halfcircles">
+              <svg className="voices__halfcircle" viewBox="0 0 630 630" fill="none">
+                <circle cx="315" cy="315" r="314" stroke="#606060" strokeWidth="1" />
+              </svg>
+              <svg className="voices__halfcircle voices__halfcircle--spin" viewBox="0 0 630 630" fill="none">
+                <circle cx="315" cy="315" r="314" stroke="#606060" strokeWidth="1" />
+              </svg>
+            </div>
 
-            <figure className="voices__image voices__image--2">
-              <img src={imageLibrary.voiceTwo.src} alt={imageLibrary.voiceTwo.alt} />
-            </figure>
+            <div className="voices__frame">
+              <figure className="voices__image voices__image--1">
+                <img src={imageLibrary.voiceOne.src} alt={imageLibrary.voiceOne.alt} />
+              </figure>
 
-            <figure className="voices__image voices__image--3">
-              <img src={imageLibrary.voiceThree.src} alt={imageLibrary.voiceThree.alt} />
-            </figure>
+              <figure className="voices__image voices__image--2">
+                <img src={imageLibrary.voiceTwo.src} alt={imageLibrary.voiceTwo.alt} />
+              </figure>
+
+              <figure className="voices__image voices__image--3">
+                <img src={imageLibrary.voiceThree.src} alt={imageLibrary.voiceThree.alt} />
+              </figure>
+            </div>
           </div>
 
-          <div className="voices__stack">
+          <div className="voices__text-col">
             {testimonials.map((testimonial, index) => (
-              <article key={testimonial.name} className={`voice voice--${index + 1}`}>
-                <p className="voice__label">{testimonial.title}</p>
-                <blockquote className="voice__quote">&ldquo;{testimonial.quote}&rdquo;</blockquote>
-                <div className="voice__meta">
+              <article key={testimonial.name} className={`voice-card voice-card--${index + 1}`}>
+                <p className="voice-card__label">{testimonial.title}</p>
+                <blockquote className="voice-card__quote">&ldquo;{testimonial.quote}&rdquo;</blockquote>
+                <div className="voice-card__meta">
                   <strong>{testimonial.name}</strong>
                   <span>{testimonial.title}</span>
                 </div>

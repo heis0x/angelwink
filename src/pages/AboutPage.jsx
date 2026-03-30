@@ -55,19 +55,19 @@ function useAboutMotion() {
         );
       });
 
-      gsap.to(".about-hero__portrait", {
-        y: "12vh",
-        scale: 1.08,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".about-hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: 1.1,
-        },
-      });
-
       media.add("(min-width: 960px)", () => {
+        gsap.to(".about-hero__portrait", {
+          y: "12vh",
+          scale: 1.08,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".about-hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.1,
+          },
+        });
+
         gsap.to(".about-story__headline", {
           yPercent: 10,
           ease: "none",

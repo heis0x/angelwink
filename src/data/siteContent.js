@@ -34,84 +34,76 @@ export const founderProfile = {
 };
 
 export const imageLibrary = {
-  heroBackdrop: {
-    src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1400&q=80",
-    alt: "Placeholder studio portrait backdrop",
-  },
   heroPortrait: {
-    src: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80",
-    alt: "Placeholder founder portrait",
-  },
-  heroDetail: {
-    src: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=900&q=80",
-    alt: "Placeholder detail portrait",
+    src: "https://images.pexels.com/photos/12636308/pexels-photo-12636308.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Elegant founder portrait with gold jewelry in studio lighting",
   },
   precisionStill: {
-    src: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80",
-    alt: "Placeholder beauty portrait",
+    src: "https://images.pexels.com/photos/9676078/pexels-photo-9676078.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Close-up of tattoo artistry in progress",
   },
   precisionReveal: {
-    src: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=80",
-    alt: "Placeholder editorial portrait",
+    src: "https://images.pexels.com/photos/36170865/pexels-photo-36170865.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Tattoo artist at work in studio",
   },
   collageOne: {
-    src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
-    alt: "Placeholder studio portrait",
+    src: "https://images.pexels.com/photos/19596896/pexels-photo-19596896.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Delicate floral tattoo detail on skin",
   },
   collageTwo: {
-    src: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1000&q=80",
-    alt: "Placeholder soft portrait",
+    src: "https://images.pexels.com/photos/5128220/pexels-photo-5128220.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Lash extension artistry in session",
   },
   collageThree: {
-    src: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=80",
-    alt: "Placeholder close beauty portrait",
+    src: "https://images.pexels.com/photos/22690356/pexels-photo-22690356.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Editorial fashion portrait with bold styling",
   },
   collageFour: {
-    src: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=80",
-    alt: "Placeholder city portrait",
+    src: "https://images.pexels.com/photos/28991529/pexels-photo-28991529.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Luxury tattoo studio atmosphere",
   },
   collageFive: {
-    src: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1100&q=80",
-    alt: "Placeholder founder lifestyle image",
+    src: "https://images.pexels.com/photos/13345926/pexels-photo-13345926.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Tattoo artist crafting intricate body art",
   },
   voiceOne: {
-    src: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80",
-    alt: "Placeholder calm beauty portrait",
+    src: "https://images.pexels.com/photos/9509032/pexels-photo-9509032.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Luxurious close-up portrait with gold jewelry",
   },
   voiceTwo: {
-    src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
-    alt: "Placeholder editorial portrait",
+    src: "https://images.pexels.com/photos/4906289/pexels-photo-4906289.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Client portrait with natural beauty",
   },
   voiceThree: {
-    src: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=80",
-    alt: "Placeholder founder detail portrait",
+    src: "https://images.pexels.com/photos/2661255/pexels-photo-2661255.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Expressive client portrait in studio light",
   },
   aboutPortrait: {
-    src: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80",
-    alt: "Placeholder founder portrait for the about page",
+    src: "https://images.pexels.com/photos/2399536/pexels-photo-2399536.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Professional founder portrait with braided hair in studio light",
   },
   aboutStudio: {
-    src: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80",
-    alt: "Placeholder studio scene",
+    src: "https://images.pexels.com/photos/28991522/pexels-photo-28991522.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Moody tattoo studio interior",
   },
   aboutDesk: {
-    src: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1100&q=80",
-    alt: "Placeholder founder workspace image",
+    src: "https://images.pexels.com/photos/1115128/pexels-photo-1115128.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Professional beauty tools close-up",
   },
   aboutDetail: {
-    src: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1100&q=80",
-    alt: "Placeholder detail portrait",
+    src: "https://images.pexels.com/photos/4123049/pexels-photo-4123049.jpeg?auto=compress&cs=tinysrgb&w=1400",
+    alt: "Tattoo equipment detail on dark surface",
   },
 };
 
 export const serviceLanes = [
   {
     id: "tattoo",
-    eyebrow: "Lead Business",
+    eyebrow: "Lead Practice",
     title: "Tattoo Services",
     format: "In-person • Abuja",
     copy:
-      "Semi-permanent and permanent tattoo work set the tone for Angel's Wink first. This is the sharpest edge of the brand and the visual language the site should lead with.",
+      "Semi-permanent and permanent tattoo work sit at the center of Angel's Wink. This is the most established side of the brand and the clearest expression of its visual standard.",
     items: ["Semi-permanent tattoo services", "Permanent tattoo services"],
   },
   {
@@ -120,7 +112,7 @@ export const serviceLanes = [
     title: "Lash Services",
     format: "In-person • Abuja",
     copy:
-      "Lash extension services sit beside the tattoo work without feeling secondary or random. They belong to the same polished beauty world.",
+      "Lash appointments belong to the same polished studio world: clean execution, soft detail, and a client experience that feels considered from start to finish.",
     items: ["Lash extension services"],
   },
   {
@@ -129,7 +121,7 @@ export const serviceLanes = [
     title: "Beauty Training",
     format: "In-person + digital",
     copy:
-      "Training is practical and hands-on, with room for classroom sessions, workshops, and digital resources that can keep teaching after the live session ends.",
+      "Training is structured for real application, from live classes and workshops to digital learning material that keeps teaching beyond the room.",
     items: [
       "Lash extension classes and student training",
       "Semi-permanent tattoo training",
@@ -139,11 +131,11 @@ export const serviceLanes = [
   },
   {
     id: "growth",
-    eyebrow: "Digital Marketing",
+    eyebrow: "Growth Strategy",
     title: "Instagram Growth and Ads Support",
     format: "Online",
     copy:
-      "This lane positions Angel as a founder who understands audience building, monetization, paid reach, and content systems, not just beauty visuals.",
+      "This side of the brand covers audience growth, monetization, paid reach, content direction, and recovery support for founders who need practical Instagram help.",
     items: [
       "Social media management",
       "Instagram growth and monetization",
@@ -158,11 +150,11 @@ export const serviceLanes = [
   },
   {
     id: "wellness",
-    eyebrow: "Wellness",
+    eyebrow: "Wellness Guidance",
     title: "Lifestyle Accountability and Body Reset Support",
     format: "Online",
     copy:
-      "The wellness side of the brand stays personal and direct: weight loss support, routine reset, body guidance, and consistent accountability.",
+      "Wellness support stays personal and disciplined, with body reset guidance, weight-loss structure, and steady accountability rather than vague motivation.",
     items: [
       "Weight loss coaching",
       "Body reset and wellness guidance",
@@ -176,19 +168,19 @@ export const testimonials = [
     name: "Chidinma",
     title: "Tattoo client",
     quote:
-      "The whole experience felt intentional from the first message. The work looked refined, the environment felt calm, and I never felt rushed through my appointment.",
+      "Angel moved with calm precision. The studio felt private, and the final piece looked even better than I imagined.",
   },
   {
     name: "Mariam",
     title: "Beauty student",
     quote:
-      "I joined for training and left with something I could actually use. The explanations were clear, the demos felt practical, and the structure made sense for business too.",
+      "The training felt clear, practical, and beautifully structured. I left with skills I could actually use with confidence.",
   },
   {
     name: "Tolu",
     title: "Growth client",
     quote:
-      "The Instagram support helped me stop posting blindly. My offers became clearer, my profile felt more serious, and I finally had a direction I could measure.",
+      "My page finally felt intentional. The direction was cleaner, the offer made sense, and the strategy stopped feeling random.",
   },
 ];
 
